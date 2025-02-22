@@ -1,1 +1,33 @@
-hello world
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Backup System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>YouTube Backup System</h1>
+    </header>
+    <main>
+        <button id="auth-button">Authorize with Google</button>
+        <button id="backup-button" disabled>Start Backup</button>
+        <p id="status"></p>
+    </main>
+    <script>
+        document.getElementById("auth-button").addEventListener("click", function() {
+            window.location.href = "/auth"; // Backend route to handle OAuth
+        });
+        
+        document.getElementById("backup-button").addEventListener("click", function() {
+            fetch("/start-backup") // Calls the backup process
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("status").innerText = data.message;
+                })
+                .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>
